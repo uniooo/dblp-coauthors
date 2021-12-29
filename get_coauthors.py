@@ -4,7 +4,7 @@
 Author: uniooo
 Date: 2021-12-29 20:56:02
 LastEditors: uniooo
-LastEditTime: 2021-12-29 22:37:01
+LastEditTime: 2021-12-29 23:08:21
 FilePath: /dblp-coauthors/get_coauthors.py
 Description: 
 '''
@@ -81,9 +81,14 @@ def main(args):
     set_inspect_years(args)
     crawl_data(args)
 
+    coauthors = []
+    for coauthor in coauthor_list:
+        coauthors.append(tuple(coauthor.split(" ", 1)))
+
+    coauthors = sorted(coauthors, key=lambda x: x[1])
     with open(args.output, "w") as fout:
-        for coauthor in coauthor_list:
-            fout.write(coauthor + "\n")
+        for coauthor in coauthors:
+            fout.write(" ".join(coauthor) + "\n")
            
 if __name__ == "__main__":
     args = parse_args()
